@@ -1,16 +1,15 @@
-from os import stat
 from bs4 import BeautifulSoup
 import json
-from jsii import enum
-from numpy import true_divide
 import requests
 import re
 
 def findThreePointShooters(event=None,context=None):
-    #event['queryStringParameters']['birthDate']
+    #month = event['birthMonth']
+    #day = event['birthDay']
     #extract the birth day and month from the query string, enter it into the url, then get the stuff
     
-    url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month=9&day=12'
+   # url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month='+month+'&day='+day
+    url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month=12&day=12'
     result = requests.get(url)
     doc = BeautifulSoup(result.text, 'html.parser')
     listPercent = doc.body.table.find_all('td', {'data-stat' : "fg3_pct"})
@@ -40,11 +39,9 @@ def findThreePointShooters(event=None,context=None):
             break
         dictLen -= 1
 
-
     return {
         'statusCode': 200,
-        #'body': json.dumps(list)
+        'body': json.dumps(percentDict)
     }
 
 
-findThreePointShooters()

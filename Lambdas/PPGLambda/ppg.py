@@ -1,16 +1,15 @@
 from bs4 import BeautifulSoup
 import json
-from numpy import percentile
 import requests
 import re
 
 def findppg(event=None, context=None):
-    #month = event['queryStringParameters']['birthMonth']
-    #day = event['queryStringParameters']['birthDay']
+    month = event['queryStringParameters']['birthMonth']
+    day = event['queryStringParameters']['birthDay']
     #extract the birth day and month from the query string, enter it into the url, then get the stuff
     
-    #url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month='+str(month)+'&day='+str(day)
-    url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month=12&day=12'
+    url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month='+str(month)+'&day='+str(day)
+    #url = 'https://www.basketball-reference.com/friv/birthdays.fcgi?month=12&day=12'
     result = requests.get(url)
     doc = BeautifulSoup(result.text, 'html.parser')
     listPercent = doc.body.table.find_all('td', {'data-stat' : "pts_per_g"})
@@ -51,7 +50,5 @@ def findppg(event=None, context=None):
         },
         'body': json.dumps(ppgDict)
     }
-         
-findppg()
 
 

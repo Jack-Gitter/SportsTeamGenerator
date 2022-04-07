@@ -1,5 +1,5 @@
-FROM public.ecr.aws/lambda/python:3.8
-
+FROM amazon/aws-lambda-python:3.8
+    
 # Copy function code
 COPY threePointShooters.py ${LAMBDA_TASK_ROOT}
 COPY requirements.txt ./
